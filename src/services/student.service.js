@@ -74,6 +74,28 @@ const getSubjectsByStudent = async (student_id) => {
   return result.rows;
 };
 
+const assignSubject = async (student_id, subject_id) => {
+  try {
+    const result = await pool.query(
+      `INSERT INTO student_subjects (student_id, subject_id)
+       VALUES ($1, $2)
+       RETURNING *`,
+      [student_id, subject_id]
+    );
+
+    return result.rows[0];
+
+  } catch (error) {
+
+    // 🔥 evitar duplicados (MUY IMPORTANTE)
+    if (error.code === "23505") {
+      return { message: "El estudiante ya tiene esta materia" };
+    }
+
+    throw error;
+  }
+};
+
 module.exports = {
   createStudent,
   getByCedula,

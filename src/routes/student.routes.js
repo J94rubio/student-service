@@ -46,6 +46,16 @@ const studentRoutes = async (req, res, pathname) => {
     return res.end(JSON.stringify(result));
   }
 
+  // 🔥 POST /student-subjects (asignar materia a estudiante)
+  if (pathname === "/student-subjects" && req.method === "POST") {
+    const body = await parseBody(req);
+
+    const result = await controller.assignSubject(body);
+
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(result));
+  }
+
   return false;
 };
 
