@@ -102,4 +102,5 @@ module.exports = {
   getAll,
   getSubjects,
   getSubjectsByStudent,
+  assignSubject,
 };
