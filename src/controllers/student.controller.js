@@ -35,5 +35,6 @@ module.exports = {
   getByCedula,
   getAll,
   getSubjects,
-  getSubjectsByStudent, // 🔥
+  getSubjectsByStudent,
+  assignSubject,
 };
