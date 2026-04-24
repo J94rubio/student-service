@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Student Service API",
+    "version": "1.0.0",
+    "description": "Microservicio para gestión de estudiantes"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Students",
+      "description": "Operaciones de estudiantes"
+    }
+  ],
+  "paths": {
+    "/students": {
+      "post": {
+        "summary": "Crear estudiante",
+        "tags": ["Students"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Estudiante creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar estudiantes",
+        "tags": ["Students"],
+        "responses": {
+          "200": {
+            "description": "Lista de estudiantes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students/{cedula}": {
+      "get": {
+        "summary": "Buscar estudiante por cédula",
+        "tags": ["Students"],
+        "parameters": [
+          {
+            "name": "cedula",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cédula del estudiante"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estudiante encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Estudiante no encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Student": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "cedula": {
+            "type": "string",
+            "example": "123456"
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Juan Pérez"
+          },
+          "correo": {
+            "type": "string",
+            "example": "juan@email.com"
+          },
+          "celular": {
+            "type": "string",
+            "example": "3001234567"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StudentInput": {
+        "type": "object",
+        "required": ["cedula", "nombre", "correo", "celular"],
+        "properties": {
+          "cedula": {
+            "type": "string",
+            "example": "123456"
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Juan Pérez"
+          },
+          "correo": {
+            "type": "string",
+            "example": "juan@email.com"
+          },
+          "celular": {
+            "type": "string",
+            "example": "3001234567"
+          }
+        }
+      }
+    }
+  }
+}
